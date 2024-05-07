@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-XdX2u5cXjFp+wvQTHk9pqCUqyeZ/rNNOMYv7tOHgrwlLJ1k0YLCbDrVUdX9OkVW3OzEzjWV39zLxvEOhTR5QwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: "white";
+
+        }
+        .App {
+            background-color: #E8E8E8;
+        }
+        header {
+            background: #299225 !important; /* Set background color to white */
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+        img{
+            position:absolute;
+            margin-left:100px;
+            margin-top:-10px;
+            height:67px;
+            width: 80px; 
+         }
+        .logo {
+            margin-left: 145px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color:white;
+        }
+        nav ul {
+            margin-left: 100px;
+            list-style-type: none;
+            margin: 0;
+            position:absolute;
+            top:16px;
+            right:200px;
+            padding: 0;
+            display: flex;
+        }
+        nav li {
+            margin-left: 1rem;
+            margin-left: 10px;
+            color: rgb(240, 26, 26);
+            text-decoration: none;
+        }
+        nav a {
+    color: rgb(194, 168, 168);
+    text-decoration: none;
+}
+
+        footer {
+            background-color: white;
+            color: black;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 700px;
+        }
+
+        /* Style the form container */
+#prediction-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-right:40px;
+}
+.form-group {
+    flex: 1 0 30%; /* Réglez la largeur de chaque champ d'entrée */
+    margin-bottom: 20px;
+}
+/* Style the labels */
+label {
+    display: block;
+    margin-bottom: 2px;
+    font-weight: bold;
+    
+}
+
+/* Style the input fields */
+input[type="number"] {
+   
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Style the submit button */
+button[type="submit"] {
+    background-color: #181c20;
+    color: white;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Style the prediction result */
+#prediction-result {
+     
+    position:absolute;
+    bottom:600px;
+    left:140px;
+    font-weight: bold;
+     
+}
+p{
+    color:white;
+}
+
+ 
+.ah{
+width:500px;
+height:500px;
+position:absolute;
+top:200px;
+left:-10px;
+}
+.description {
+    color: #555;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+    </style>
+
+</head>
+<body>
+    <i style="width:500px; margin-top:500px;" class="fab fa-html5"></i>
+    <div class="logo1"><img src="https://thumbs.dreamstime.com/b/blanc-tendu-d-ic-ne-de-geste-de-main-97325206.jpg"></div>
+    
+        <header>
+           
+            <div class="logo">PovPredict</div>
+            <nav>
+                <ul>
+                  
+                    
+                </ul>
+            </nav>
+        </header>
+
+      
+    
+    <h2 style="color:#97a6b8; margin-left:135px;">Quels Pays devraient recevoir des fonds?</h2>
+ 
+    <form id="prediction-form">
+        <!-- Input fields for the features -->
+        <div class="form-group">
+        <label for="child_mort">Mortalité infantile : </label>
+        <input placeholder="Mortalité infantile" type="number" id="child_mort" name="child_mort" step="0.01" required><br><br>
+        <p class="description">Décès d'enfants de moins de 5 ans pour 1000 naissances vivantes</p>
+        </div>
+        <div class="form-group">
+        <label for="exports">Exportations : 
+        <input placeholder="Exportations" type="number" id="exports" name="exports" step="0.01" required><br><br>
+        <p class="description">Exportations de biens et services par habitant. Donné en pourcentage du PIB par habitant</p>
+        </div>
+        <div class="form-group"> 
+        <label for="health">Santé :</label>
+        <input placeholder="Santé" type="number" id="health" name="health" step="0.01" required><br><br>
+        <p class="description">Dépenses totales de santé par habitant. Donné en pourcentage du PIB par habitant</p>
+    </div>
+        <div class="form-group"> 
+        <label for="imports">Importations :</label>
+        <input placeholder="Importations " type="number" id="imports" name="imports" step="0.01" required><br><br>
+        <p class="description">Importations de biens et services par habitant. Donné en pourcentage du PIB par habitant</p>
+</div>
+        <div class="form-group"> 
+        <label for="income">Revenu                :</label>
+        <input placeholder="Revenu" type="number" id="income" name="income" step="0.01" required><br><br>
+        <p class="description">Revenu net par personne</p>
+</div>
+        <div class="form-group"> 
+        <label for="inflation">Inflation:</label>
+        <input placeholder="Inflation:" type="number" id="inflation" name="inflation" step="0.01" required><br><br>
+        <p class="description">Mesure du taux de croissance annuel du PIB total</p>
+</div>
+        <div class="form-group">
+        <label for="life_expec">Espérence de vie :</label>
+        <input placeholder="Espérence de vie" type="number" id="life_expec" name="life_expec" step="0.01" required><br><br>
+        <p class="description">Le nombre moyen d'années qu'un nouveau-né vivrait si les tendances de mortalité actuelles devaient rester les mêmes</p>
+        </div>
+        <div class="form-group"> 
+        <label for="total_fer">Fertilité totale :</label>
+        <input placeholder="Fertilité totale" type="number" id="total_fer" name="total_fer" step="0.01" required><br><br>
+        <p class="description">Le nombre d'enfants qui naîtraient pour chaque femme si les taux de fécondité par âge actuels devaient rester les mêmes</p>
+    </div>
+    <div class="form-group">
+        <label for="gdpp">PIB par habitant :</label>
+        <input placeholder="PIB par habitant" type="number" id="gdpp" name="gdpp" step="0.01" required><br><br>
+        <p class="description">Calculé comme le PIB total divisé par la population totale</p>
+    </div>
+        <button type="submit">Prédire</button>
+    </form>
+    
+    <div id="prediction-result"> </div>
+    <img  class="ah" src="https://cdn-icons-png.flaticon.com/512/6897/6897881.png">
+</div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+
